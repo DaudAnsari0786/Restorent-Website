@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+* {
+  scroll-behavior: smooth;
+}
+
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2c2c2c;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #777;
+}
+
+.invertImg {
+  filter: invert(0.23);
+}
+
+.noInvertImg {
+  filter: invert(0);
+}
+
+
+@layer{
+  /*======================
+    404 page
+=======================*/
+
+.page_404 {
+  padding: 40px 0;
+  background: #fff;
+  font-family: "Arvo", serif;
+}
+
+.page_404 img {
+  width: 100%;
+}
+
+.four_zero_four_bg {
+  background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+  height: 400px;
+  background-position: center;
+}
+
+.four_zero_four_bg h1 {
+  font-size: 80px;
+}
+
+.four_zero_four_bg h3 {
+  font-size: 80px;
+}
+
+.link_404 {
+  color: #fff !important;
+  padding: 10px 20px;
+  background: #39ac31;
+  margin: 20px 0;
+  display: inline-block;
+}
+.contant_box_404 {
+  margin-top: -50px;
+}
+
+}
+input{
+  font-family: Arial, Helvetica, sans-serif;
+
+  
+}
+/* Liquid Glass — 2025–26 translucent UI recipe.
+   Works on any colorful background; flat backgrounds will look subtler. */
+.glass {
+  position: relative;
+  background: radial-gradient(ellipse 130% 90% at 50% 0%, rgba(255, 255, 255, 0.180) 0%, rgba(255, 255, 255, 0.100) 45%, rgba(255, 255, 255, 0.050) 100%);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  /* border-radius: 24px; */
+  box-shadow: 0 15px 45px -11px rgba(0, 0, 0, 0.283), 0 1px 2px rgba(0, 0, 0, 0.141), inset 0 0 8px rgba(255, 255, 255, 0.098), inset 0 4px 8px -4px rgba(0, 0, 0, 0.060), inset 0 -1px 1px rgba(255, 255, 255, 0.154), inset 0 1px 1px rgba(255, 255, 255, 0.700), inset 0 0 0 1px rgba(255, 255, 255, 0.380);
+  color: #ffffff;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Specular sheen — radial arc catching the top curve of the slab. */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(ellipse 110% 65% at 50% -15%, rgba(255, 255, 255, 0.550) 0%, rgba(255, 255, 255, 0) 70%);
+  opacity: 1.00;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Inner rim — composes with the outer rim on the same edge for a
+   brighter "lensing" line. Drawn at inset:0 so it doesn't show as a
+   parallel ring on small elements like icons or toggles. */
+.glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.530), inset 0 1px 0 rgba(255, 255, 255, 0.800), inset 0 -1px 0 rgba(255, 255, 255, 0.175);
+  pointer-events: none;
+  z-index: 1;
+}
+.element {
+  transition: 
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.element:hover, .element:focus-visible {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .element:hover, .element:focus-visible {
+    transform: scale(1.1);
+  }
+}
+.glass > * { position: relative; z-index: 2; }
+
+/* Graceful fallback for browsers without backdrop-filter. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: rgba(255, 255, 255, 0.550);
+  }
+}

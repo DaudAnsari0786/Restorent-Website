@@ -1,0 +1,535 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+
+const Chef = () => {
+  const [activeChef, setActiveChef] = useState(null);
+
+  // Indian Chef Data
+  const chefs = [
+    {
+      id: 1,
+      name: "Chef Vikram Singh",
+      position: "Executive Chef",
+      experience: "18+ Years",
+      specialty: "Royal Indian Cuisine",
+      bio: "Master of authentic Indian royal cuisine with expertise in Awadhi and Mughlai dishes. Trained under legendary chefs in Lucknow and Hyderabad.",
+      rating: 4.9,
+      awards: ["Best Indian Chef 2023", "Royal Cuisine Award 2022"],
+      social: {
+        facebook: "#",
+        twitter: "#",
+        instagram: "#",
+        linkedin: "#"
+      },
+      specialties: ["Biryani", "Kebabs", "Curries"],
+      availability: "Mon-Sat",
+      color: "from-red-500 to-orange-500",
+      initial: "VS"
+    },
+    {
+      id: 2,
+      name: "Chef Priya Sharma",
+      position: "Pastry Chef",
+      experience: "12+ Years",
+      specialty: "Indian Desserts & Fusion",
+      bio: "Award-winning pastry chef specializing in traditional Indian sweets with a modern twist. Expert in fusion desserts combining Indian and French techniques.",
+      rating: 4.8,
+      awards: ["Best Dessert Chef 2023", "Innovation in Indian Sweets 2022"],
+      social: {
+        facebook: "#",
+        twitter: "#",
+        instagram: "#",
+        linkedin: "#"
+      },
+      specialties: ["Gulab Jamun", "Rasmalai", "Fusion Desserts"],
+      availability: "Wed-Sun",
+      color: "from-pink-500 to-rose-500",
+      initial: "PS"
+    },
+    {
+      id: 3,
+      name: "Chef Arjun Reddy",
+      position: "Sous Chef",
+      experience: "10+ Years",
+      specialty: "South Indian Cuisine",
+      bio: "Passionate about authentic South Indian flavors from Tamil Nadu, Kerala, and Andhra. Known for perfect spice blends and traditional cooking methods.",
+      rating: 4.7,
+      awards: ["Best South Indian Chef 2023", "Spice Master Award"],
+      social: {
+        facebook: "#",
+        twitter: "#",
+        instagram: "#",
+        linkedin: "#"
+      },
+      specialties: ["Dosa", "Sambar", "Biryani"],
+      availability: "Tue-Sun",
+      color: "from-yellow-500 to-amber-500",
+      initial: "AR"
+    },
+    {
+      id: 4,
+      name: "Chef Ananya Patel",
+      position: "Tandoor Master",
+      experience: "14+ Years",
+      specialty: "Tandoori & North Indian",
+      bio: "Expert in traditional tandoor cooking with a focus on Punjabi and North Indian cuisine. Master of marination and clay oven techniques.",
+      rating: 4.9,
+      awards: ["Best Tandoor Chef 2023", "North Indian Cuisine Excellence"],
+      social: {
+        facebook: "#",
+        twitter: "#",
+        instagram: "#",
+        linkedin: "#"
+      },
+      specialties: ["Tandoori Chicken", "Naan", "Butter Chicken"],
+      availability: "Mon-Fri",
+      color: "from-orange-500 to-red-500",
+      initial: "AP"
+    },
+    {
+      id: 5,
+      name: "Chef Rajesh Iyer",
+      position: "Vegan Chef",
+      experience: "15+ Years",
+      specialty: "Indian Vegetarian & Vegan",
+      bio: "Pioneer in Indian plant-based cuisine. Expert in creating flavorful vegetarian and vegan dishes using traditional Indian ingredients and spices.",
+      rating: 5.0,
+      awards: ["Best Vegan Chef 2023", "Plant-Based Innovation Award"],
+      social: {
+        facebook: "#",
+        twitter: "#",
+        instagram: "#",
+        linkedin: "#"
+      },
+      specialties: ["Paneer Dishes", "Dal", "Vegetarian Curries"],
+      availability: "Mon-Sat",
+      color: "from-green-500 to-emerald-500",
+      initial: "RI"
+    },
+    {
+      id: 6,
+      name: "Chef Meera Nair",
+      position: "Head Chef",
+      experience: "16+ Years",
+      specialty: "Coastal Indian Cuisine",
+      bio: "Celebrating the rich coastal flavors of Kerala, Goa, and Bengal. Expert in seafood, coconut-based curries, and traditional coastal cooking.",
+      rating: 4.8,
+      awards: ["Best Seafood Chef 2023", "Coastal Cuisine Award"],
+      social: {
+        facebook: "#",
+        twitter: "#",
+        instagram: "#",
+        linkedin: "#"
+      },
+      specialties: ["Fish Curry", "Prawns", "Coconut Dishes"],
+      availability: "Mon-Fri",
+      color: "from-cyan-500 to-blue-500",
+      initial: "MN"
+    },
+    {
+      id: 7,
+      name: "Chef Suresh Kumar",
+      position: "Bread Master",
+      experience: "20+ Years",
+      specialty: "Indian Breads & Street Food",
+      bio: "Master craftsman of Indian breads and street food. Expert in creating perfect rotis, parathas, and authentic Indian street food experiences.",
+      rating: 4.9,
+      awards: ["Best Bread Master 2023", "Street Food Champion"],
+      social: {
+        facebook: "#",
+        twitter: "#",
+        instagram: "#",
+        linkedin: "#"
+      },
+      specialties: ["Naan", "Paratha", "Kulcha"],
+      availability: "Mon-Sat",
+      color: "from-purple-500 to-indigo-500",
+      initial: "SK"
+    },
+    {
+      id: 8,
+      name: "Chef Kavita Joshi",
+      position: "Spice Expert",
+      experience: "13+ Years",
+      specialty: "Spice Blending & Ayurvedic",
+      bio: "Expert in traditional Indian spice blending and Ayurvedic cooking principles. Known for creating balanced and health-conscious Indian dishes.",
+      rating: 4.8,
+      awards: ["Best Spice Master 2023", "Ayurvedic Cuisine Award"],
+      social: {
+        facebook: "#",
+        twitter: "#",
+        instagram: "#",
+        linkedin: "#"
+      },
+      specialties: ["Spice Blends", "Ayurvedic Dishes", "Herbal Recipes"],
+      availability: "Mon-Fri",
+      color: "from-amber-500 to-yellow-500",
+      initial: "KJ"
+    },
+    {
+      id: 9,
+      name: "Chef Amit Desai",
+      position: "Grill Master",
+      experience: "11+ Years",
+      specialty: "Indian BBQ & Grilling",
+      bio: "Passionate about Indian barbecue and grilling techniques. Expert in creating smoky, flavorful dishes using traditional Indian spices and modern grilling methods.",
+      rating: 4.7,
+      awards: ["Best Grill Master 2023", "BBQ Excellence Award"],
+      social: {
+        facebook: "#",
+        twitter: "#",
+        instagram: "#",
+        linkedin: "#"
+      },
+      specialties: ["Tandoori", "Grilled Kebabs", "Smoked Dishes"],
+      availability: "Tue-Sun",
+      color: "from-red-500 to-orange-500",
+      initial: "AD"
+    }
+  ];
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        duration: 0.7,
+        ease: "easeIn"
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        ease: "easeIn"
+      }
+    }
+  };
+
+  const headerVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        ease: "easeIn"
+      }
+    }
+  };
+
+  const statsVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: 0.5,
+        duration: 0.7,
+        ease: "easeIn"
+      }
+    }
+  };
+
+  const ctaVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: 0.7,
+        duration: 0.7,
+        ease: "easeIn"
+      }
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-orange-50 to-amber-50 py-12 px-4 sm:px-6 lg:px-8">
+      {/* Header Section */}
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          variants={headerVariants}
+          initial="hidden"
+          animate="visible"
+          className="text-center mb-12"
+        >
+          <div className="inline-block bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+            🇮🇳 Our Indian Culinary Team
+          </div>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-4">
+            Meet Our <span className="text-orange-600">Master Indian Chefs</span>
+          </h1>
+          <p className="text-gray-600 text-base sm:text-lg max-w-3xl mx-auto">
+            Passionate culinary artists dedicated to celebrating the rich and diverse 
+            flavors of Indian cuisine with authentic techniques and innovative approaches.
+          </p>
+        </motion.div>
+
+        {/* Chef Grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+        >
+          {chefs.map((chef) => (
+            <motion.div
+              key={chef.id}
+              variants={itemVariants}
+              whileHover={{ 
+                y: -10,
+                scale: 1.02,
+                transition: { duration: 1, ease: "easeInOut" }
+              }}
+              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-1000 overflow-hidden group cursor-pointer"
+            >
+              {/* Chef Avatar Section - No Icons */}
+              <div className={`relative overflow-hidden h-72 sm:h-80 bg-gradient-to-br ${chef.color}`}>
+                
+                {/* Animated Background Pattern */}
+                <div className="absolute inset-0 opacity-20">
+                  <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
+                  <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full translate-x-1/3 translate-y-1/3 animate-pulse delay-1000"></div>
+                  <div className="absolute top-1/2 left-1/2 w-48 h-48 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 animate-pulse delay-500"></div>
+                </div>
+
+                {/* Chef Avatar - Custom Design */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center">
+                    {/* Custom Avatar Circle with Hat */}
+                    <div className="relative w-36 h-36 md:w-44 md:h-44 mx-auto">
+                      {/* Background Circle */}
+                      <div className="absolute inset-0 bg-white/30 backdrop-blur-sm rounded-full ring-4 ring-white/40 shadow-2xl"></div>
+                      
+                      {/* Inner Circle */}
+                      <div className="absolute inset-2 bg-white/40 backdrop-blur-sm rounded-full"></div>
+                      
+                      {/* Chef Hat SVG */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <svg className="w-16 h-16 md:w-20 md:h-20 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                          <path d="M12 2C8.13 2 5 5.13 5 9c0 1.38.56 2.63 1.46 3.54C7.37 13.44 8 14.63 8 16v1h8v-1c0-1.37.63-2.56 1.54-3.46C18.44 11.63 19 10.38 19 9c0-3.87-3.13-7-7-7z" fill="white" stroke="white"/>
+                          <path d="M9 17h6v2H9z" fill="white" stroke="white"/>
+                          <path d="M8 14h8v1H8z" fill="white" stroke="white"/>
+                          <circle cx="9" cy="8" r="1" fill="white"/>
+                          <circle cx="15" cy="8" r="1" fill="white"/>
+                        </svg>
+                      </div>
+                      
+                      {/* Initials Overlay */}
+                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full shadow-lg">
+                        <span className="text-xs font-bold text-gray-800">{chef.initial}</span>
+                      </div>
+                    </div>
+                    
+                    {/* Title Badge */}
+                    <div className="mt-3 bg-white/30 backdrop-blur-sm px-4 py-1.5 rounded-full inline-block border border-white/20">
+                      <span className="text-white text-xs font-medium tracking-wider">
+                        {chef.position}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Rating Badge */}
+                <div className="absolute top-4 right-4 bg-white bg-opacity-90 backdrop-blur-sm px-3 py-1 rounded-full shadow-lg z-10">
+                  <span className="flex items-center gap-1 text-sm font-semibold text-gray-700">
+                    <span className="text-yellow-400">★</span>
+                    {chef.rating}
+                  </span>
+                </div>
+
+                {/* Experience Badge */}
+                <div className="absolute bottom-4 left-4 bg-black/40 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg z-10">
+                  {chef.experience}
+                </div>
+
+                {/* Availability Badge */}
+                <div className="absolute bottom-4 right-4 bg-green-500/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg z-10">
+                  {chef.availability}
+                </div>
+
+                {/* Indian Flag Badge */}
+                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full shadow-lg z-10">
+                  <span className="text-sm font-medium">🇮🇳</span>
+                </div>
+
+                {/* Hover Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+              </div>
+
+              {/* Chef Info */}
+              <div className="p-6">
+                <div className="flex items-start justify-between mb-2">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-800 group-hover:text-orange-600 transition-colors duration-1000">
+                      {chef.name}
+                    </h3>
+                    <p className="text-orange-600 text-sm font-medium">{chef.position}</p>
+                  </div>
+                  <span className="bg-orange-50 text-orange-600 px-2 py-1 rounded text-xs font-semibold">
+                    {chef.specialty}
+                  </span>
+                </div>
+
+                <p className="text-gray-600 text-sm mt-2 line-clamp-2">{chef.bio}</p>
+
+                {/* Specialties */}
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {chef.specialties.map((specialty, index) => (
+                    <span
+                      key={index}
+                      className="bg-orange-50 text-orange-700 px-3 py-1 rounded-full text-xs font-medium"
+                    >
+                      {specialty}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Awards */}
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {chef.awards.map((award, index) => (
+                    <span
+                      key={index}
+                      className="inline-flex items-center gap-1 bg-yellow-50 text-yellow-700 px-2 py-1 rounded-full text-xs font-medium"
+                    >
+                      <span className="text-yellow-500">🏆</span>
+                      {award}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Social Links */}
+                <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+                  <div className="flex gap-3">
+                    <a
+                      href={chef.social.facebook}
+                      className="text-gray-400 hover:text-blue-600 transition-all duration-1000 hover:scale-110"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                      </svg>
+                    </a>
+                    <a
+                      href={chef.social.twitter}
+                      className="text-gray-400 hover:text-blue-400 transition-all duration-1000 hover:scale-110"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                      </svg>
+                    </a>
+                    <a
+                      href={chef.social.instagram}
+                      className="text-gray-400 hover:text-pink-600 transition-all duration-1000 hover:scale-110"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                      </svg>
+                    </a>
+                    <a
+                      href={chef.social.linkedin}
+                      className="text-gray-400 hover:text-blue-700 transition-all duration-1000 hover:scale-110"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                      </svg>
+                    </a>
+                  </div>
+                  <button 
+                    onClick={() => setActiveChef(activeChef === chef.id ? null : chef.id)}
+                    className="text-orange-600 hover:text-orange-700 text-sm font-medium transition-colors duration-1000 hover:scale-105"
+                  >
+                    {activeChef === chef.id ? 'View Less' : 'View More'}
+                  </button>
+                </div>
+
+                {/* Expanded Details */}
+                {activeChef === chef.id && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.7, ease: "easeIn" }}
+                    className="mt-4 pt-4 border-t border-gray-100"
+                  >
+                    <div className="bg-orange-50 p-4 rounded-lg">
+                      <h4 className="font-semibold text-gray-800 mb-2">About {chef.name}</h4>
+                      <p className="text-gray-600 text-sm">{chef.bio}</p>
+                      <div className="mt-3 flex items-center gap-4">
+                        <div className="flex items-center gap-1 text-sm text-gray-600">
+                          <span className="text-orange-500">🍳</span>
+                          <span>Specializes in {chef.specialty}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Stats Section */}
+        <motion.div
+          variants={statsVariants}
+          initial="hidden"
+          animate="visible"
+          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
+        >
+          <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all duration-1000 hover:scale-105 transform">
+            <div className="text-3xl md:text-4xl font-bold text-orange-600">15+</div>
+            <div className="text-gray-600 text-sm mt-1">Expert Indian Chefs</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all duration-1000 hover:scale-105 transform">
+            <div className="text-3xl md:text-4xl font-bold text-orange-600">200+</div>
+            <div className="text-gray-600 text-sm mt-1">Years Combined Experience</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all duration-1000 hover:scale-105 transform">
+            <div className="text-3xl md:text-4xl font-bold text-orange-600">50+</div>
+            <div className="text-gray-600 text-sm mt-1">National & International Awards</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all duration-1000 hover:scale-105 transform">
+            <div className="text-3xl md:text-4xl font-bold text-orange-600">100%</div>
+            <div className="text-gray-600 text-sm mt-1">Guest Satisfaction</div>
+          </div>
+        </motion.div>
+
+        {/* CTA Section */}
+        <motion.div
+          variants={ctaVariants}
+          initial="hidden"
+          animate="visible"
+          className="mt-16 bg-gradient-to-r from-orange-600 to-orange-700 rounded-2xl shadow-xl p-8 md:p-12 text-center text-white"
+        >
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
+            Want to Join Our Indian Culinary Team?
+          </h2>
+          <p className="text-orange-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+            We're always looking for passionate chefs who want to celebrate and innovate 
+            Indian cuisine and create extraordinary dining experiences.
+          </p>
+          <button className="bg-white text-orange-600 hover:bg-gray-100 px-8 py-3 rounded-full font-semibold transition-all duration-1000 transform hover:scale-105 shadow-lg">
+            Apply Now
+          </button>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+export default Chef;
