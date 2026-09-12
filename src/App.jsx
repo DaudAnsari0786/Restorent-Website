@@ -20,6 +20,7 @@ import Signup from "./Components/Form/Signup";
 import MenuCard from "./Components/Menu/Menubar";
 import Profile from "./Components/Section/Profile";
 import Chef from "./Components/Section/Chef"; // Import Chef
+import ApplyNow from "./Components/Section/ApplyNow";
 
 const PageTransition = ({ children }) => {
   return (
@@ -133,6 +134,14 @@ const AnimatedRoutes = () => {
           element={
             <PageTransition>
               <Signup />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/applyNow"
+          element={
+            <PageTransition>
+           <ApplyNow/>
             </PageTransition>
           }
         />

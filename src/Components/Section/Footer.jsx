@@ -18,9 +18,9 @@ import { Link } from "react-router-dom";
 
 const socialLinks = [
   { name: "Facebook", icon: <FaFacebookF />, link: "#" },
-  { name: "Youtube", icon: <IoLogoYoutube />, link: "#" },
+  { name: "Youtube", icon: <IoLogoYoutube />, link: "https://www.youtube.com/@DaudAnsari_900" },
   { name: "Twitter", icon: <FaTwitter />, link: "#" },
-  { name: "Instagram", icon: <FaInstagram />, link: "#" },
+  { name: "Instagram", icon: <FaInstagram />, link: "https://www.instagram.com/official_venom_900/" },
   { name: "Linkedin", icon: <FaLinkedinIn />, link: "#" },
 ];
 
