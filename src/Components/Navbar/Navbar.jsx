@@ -93,7 +93,7 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop: Nav Links + Search + Book Now + Profile */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden md:flex items-center space-x-1 ml-10">
             {navLinks.map(({ name, link }) => (
               <Link
                 onClick={scrollToTop}
@@ -107,14 +107,14 @@ const Navbar = () => {
           </div>
 
           {/* Desktop: Search bar, Book Now, and Profile */}
-          <div className="hidden md:flex items-center space-x-3 ml-4">
+          <div className="hidden md:flex items-center space-x-3 ml-10">
             <form onSubmit={handleSearch} className="relative">
               <input
                 type="text"
                 placeholder="Search dishes..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-40 lg:w-86 pl-9 pr-9 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-gray-50"
+                className="w-40 lg:w-86  pl-9 pr-9 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-gray-50"
                 aria-label="Search"
               />
               <Search className="absolute left-2.5 top-2.5 w-4 h-4 text-gray-400" />

@@ -17,11 +17,11 @@ import { IoLogoYoutube } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 const socialLinks = [
-  { name: "Facebook", icon: <FaFacebookF />, link: "#" },
+  { name: "Facebook", icon: <FaFacebookF />, link: "https://www.facebook.com/share/1Hb8GA7WzV/" },
   { name: "Youtube", icon: <IoLogoYoutube />, link: "https://www.youtube.com/@DaudAnsari_900" },
-  { name: "Twitter", icon: <FaTwitter />, link: "#" },
+  { name: "Twitter", icon: <FaTwitter />, link: "https://x.com/daudansari6472" },
   { name: "Instagram", icon: <FaInstagram />, link: "https://www.instagram.com/official_venom_900/" },
-  { name: "Linkedin", icon: <FaLinkedinIn />, link: "#" },
+  { name: "Linkedin", icon: <FaLinkedinIn />, link: "www.linkedin.com/in/abu-bakar-ansari-798717436 Vanity URL name" },
 ];
 
 const quickLinks = [
@@ -138,10 +138,10 @@ const Footer = () => {
                   className="text-amber-400 shrink-0 group-hover:scale-110 transition-transform"
                 />
                 <a
-                  href="mailto:Daudansari6472@gmail.com"
+                  href="mailto:daudansari6472@gmail.com"
                   className="text-stone-400 hover:text-amber-400 transition-colors break-all"
                 >
-                  Daudansari6472@gmail.com
+                  daudansari6472@gmail.com
                 </a>
               </li>
             </ul>
