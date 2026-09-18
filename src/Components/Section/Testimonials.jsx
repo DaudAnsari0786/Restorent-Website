@@ -1,7 +1,7 @@
 import React from "react";
-import img1 from "/public/Hotel1.jpg";
-import img2 from "/public/Hotel2.jpg";
-import img3 from "/public/Hotel3.jpg";
+import img1 from "/public/Harsh.jpeg";
+import img2 from "/public/Abdul.jpeg";
+import img3 from "/public/Ankit1.jpeg";
 
 const Testimonials = () => {
   const testimonials = [
@@ -23,7 +23,7 @@ const Testimonials = () => {
       id: 3,
       img: img3,
       quote: "Every dish is a masterpiece. Can’t wait to return!",
-      name: "Keshav.",
+      name: "Ankit.",
       role: "Local Guide",
     },
   ];

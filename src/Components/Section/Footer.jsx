@@ -17,7 +17,7 @@ import { IoLogoYoutube } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 const socialLinks = [
-  { name: "Facebook", icon: <FaFacebookF />, link: "https://www.facebook.com/share/1Hb8GA7WzV/" },
+  { name: "Facebook", icon: <FaFacebookF />, link: "https://www.facebook.com/kameena.ladka.549221?rdid=T18sB82hWoxNan06&share_url=https%253A%252F%252Fwww.facebook.com%252Fshare%252F19Gs3qKSgw%252F#" },
   { name: "Youtube", icon: <IoLogoYoutube />, link: "https://www.youtube.com/@DaudAnsari_900" },
   { name: "Twitter", icon: <FaTwitter />, link: "https://x.com/daudansari6472" },
   { name: "Instagram", icon: <FaInstagram />, link: "https://www.instagram.com/official_venom_900/" },

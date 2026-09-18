@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock, Send, X, CheckCircle } from "lucide-react";
 import { TfiFacebook } from "react-icons/tfi";
-import { FaTwitter } from "react-icons/fa";
+import { FaInstagram, FaTwitter } from "react-icons/fa";
 import { IoLogoYoutube } from "react-icons/io5";
 import { FaGoogle } from "react-icons/fa6";
 
@@ -22,6 +22,69 @@ const Contact = () => {
       transition: { staggerChildren: 0.15, delayChildren: 0.2 },
     },
   };
+
+  // ===== CONTACT INFO ARRAY =====
+  const contactInfo = [
+    {
+      icon: MapPin,
+      title: "Address",
+      detail: "Vill. Rukmalpur Atrauliya, Azamgarh 223223",
+    },
+    {
+      icon: Phone,
+      title: "Phone",
+      detail: "+91 (902) 635-0956",
+      link: "tel:+919026350956",
+    },
+    {
+      icon: Mail,
+      title: "Email",
+      detail: "Daudansari6472@gmail.com",
+      link: "mailto:Daudansari6472@gmail.com",
+    },
+    {
+      icon: Clock,
+      title: "Opening Hours",
+      detail: (
+        <>
+          Mon–Thu: 5:00 – 10:30 PM
+          <br />
+          Fri–Sat: 5:00 – 11:30 PM
+          <br />
+          Sunday: 4:00 – 9:30 PM
+        </>
+      ),
+    },
+  ];
+
+  // ===== SOCIAL LINKS ICON ARRAY =====
+  const socialLinks = [
+    {
+      icon: TfiFacebook,
+      href: "https://www.facebook.com/kameena.ladka.549221?rdid=T18sB82hWoxNan06&share_url=https%253A%252F%252Fwww.facebook.com%252Fshare%252F19Gs3qKSgw%252F#",
+      label: "Facebook",
+    },
+    {
+      icon: FaTwitter,
+      href: "https://x.com/daudansari6472",
+      label: "Twitter",
+    },
+    {
+      icon: FaInstagram,
+      href: "https://www.instagram.com/official_venom_900/",
+      label: "Instagram",
+    },
+    {
+      icon: IoLogoYoutube,
+      href: "https://www.youtube.com/@DaudAnsari_900",
+      label: "YouTube",
+    },
+    {
+      icon: FaGoogle,
+      href: "https://www.google.com/search?q=Daud+Ansari+Azamgarh",
+      label: "Google",
+    },
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -82,38 +145,7 @@ const Contact = () => {
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10"
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              icon: MapPin,
-              title: "Address",
-              detail: "Vill. Rukmalpur Atrauliya, Azamgarh 223223",
-            },
-            {
-              icon: Phone,
-              title: "Phone",
-              detail: "+91 (902) 635-0956",
-              link: "tel:+919026350956",
-            },
-            {
-              icon: Mail,
-              title: "Email",
-              detail: "Daudansari6472@gmail.com",
-              link: "mailto:Daudansari6472@gmail.com",
-            },
-            {
-              icon: Clock,
-              title: "Opening Hours",
-              detail: (
-                <>
-                  Mon–Thu: 5:00 – 10:30 PM
-                  <br />
-                  Fri–Sat: 5:00 – 11:30 PM
-                  <br />
-                  Sunday: 4:00 – 9:30 PM
-                </>
-              ),
-            },
-          ].map((item, index) => (
+          {contactInfo.map((item, index) => (
             <motion.div
               key={index}
               variants={fadeInUp}
@@ -260,32 +292,22 @@ const Contact = () => {
                 Send Message
               </button>
             </form>
-            {/* Social links */}
+
+            {/* ===== SOCIAL LINKS (ARRAY MAPPED) ===== */}
             <div className="mt-6 flex justify-center gap-4">
-              <a
-                href="#"
-                className="text-stone-400 hover:text-amber-600 transition-colors"
-              >
-                <TfiFacebook size={20} />
-              </a>
-              <a
-                href="#"
-                className="text-stone-400 hover:text-amber-600 transition-colors"
-              >
-                <FaTwitter size={20} />
-              </a>
-              <a
-                href="#"
-                className="text-stone-400 hover:text-amber-600 transition-colors"
-              >
-                <FaGoogle size={20} />
-              </a>
-              <a
-                href="#"
-                className="text-stone-400 hover:text-amber-600 transition-colors"
-              >
-                <IoLogoYoutube size={20} />
-              </a>
+              {socialLinks.map((social, index) => (
+                <a
+                  key={index}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  title={social.label}
+                  className="text-stone-400 hover:text-amber-600 transition-colors transform hover:scale-110 duration-200"
+                >
+                  <social.icon size={20} />
+                </a>
+              ))}
             </div>
           </motion.div>
 

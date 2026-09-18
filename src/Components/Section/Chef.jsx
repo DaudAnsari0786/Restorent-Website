@@ -6,7 +6,7 @@ import img1 from "/public/keshav.jpeg";
 import img2 from "/public/neha.jpg";
 import img3 from "/public/bakar.jpeg"
 // import img4 from "/public/chef4.jpg";
-import img5 from "/public/ankit.jpeg";
+import img5 from "/public/Ankit1.jpeg";
 import { FaCentos } from 'react-icons/fa';
 // import img6 from "/public/chef6.jpg";
 const scrollToTop = () => {
