@@ -15,36 +15,65 @@ import {
 } from "react-icons/fa";
 import { IoLogoYoutube } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const socialLinks = [
-  { name: "Facebook", icon: <FaFacebookF />, link: "https://www.facebook.com/kameena.ladka.549221?rdid=T18sB82hWoxNan06&share_url=https%253A%252F%252Fwww.facebook.com%252Fshare%252F19Gs3qKSgw%252F#" },
-  { name: "Youtube", icon: <IoLogoYoutube />, link: "https://www.youtube.com/@DaudAnsari_900" },
-  { name: "Twitter", icon: <FaTwitter />, link: "https://x.com/daudansari6472" },
-  { name: "Instagram", icon: <FaInstagram />, link: "https://www.instagram.com/official_venom_900/" },
-  { name: "Linkedin", icon: <FaLinkedinIn />, link: "www.linkedin.com/in/abu-bakar-ansari-798717436 Vanity URL name" },
+  {
+    name: "Facebook",
+    icon: <FaFacebookF />,
+    link: "https://www.facebook.com/kameena.ladka.549221?rdid=T18sB82hWoxNan06&share_url=https%253A%252F%252Fwww.facebook.com%252Fshare%252F19Gs3qKSgw%252F#",
+  },
+  {
+    name: "Youtube",
+    icon: <IoLogoYoutube />,
+    link: "https://www.youtube.com/@DaudAnsari_900",
+  },
+  {
+    name: "Twitter",
+    icon: <FaTwitter />,
+    link: "https://x.com/daudansari6472",
+  },
+  {
+    name: "Instagram",
+    icon: <FaInstagram />,
+    link: "https://www.instagram.com/official_venom_900/",
+  },
+  {
+    name: "Linkedin",
+    icon: <FaLinkedinIn />,
+    link: "https://www.linkedin.com/in/abu-bakar-ansari-798717436",
+  },
 ];
 
+// ✅ Quick Links — using `to` for react-router-dom Links
 const quickLinks = [
-  { label: "About Us", href: "/about" },
-  { label: "Menu", href: "/menu" },
-  { label: "Reservations", href: "/reservations" },
-  { label: "Gift Cards", href: "#" },
-  { label: "Book Now", href: "/booking" },
+  { label: "About Us", to: "/about" },
+  { label: "Menu", to: "/menu" },
+  { label: "Reservations", to: "/reservations" },
+  { label: "Gift Cards", to: "/gift-cards" },
+  { label: "Book Now", to: "/booking" },
+];
+
+// ✅ Bottom bar links
+const legalLinks = [
+  { label: "Privacy Policy", to: "/privacy-policy" },
+  { label: "Terms of Service", to: "/terms-of-service" },
+  { label: "Cookies", to: "/cookies" },
 ];
 
 const Footer = () => {
   const [email, setEmail] = useState("");
   const currentYear = new Date().getFullYear();
 
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    // Integrate your API call here
-    setEmail("");
-    console.log("Email for Subscribe : ", email);
-  };
-
+  // ✅ Smooth scroll to top — used on Link click
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    console.log("Email for Subscribe : ", email);
+    setEmail("");
   };
 
   return (
@@ -53,9 +82,8 @@ const Footer = () => {
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent" />
 
       <div className="max-w-7xl mx-auto pt-16 pb-6 px-4 md:px-8 relative z-10">
-        {/* Main Grid - 4 columns on large screens */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
-          {/* Brand & Social */}
+          {/* ===== Brand & Social ===== */}
           <div>
             <h3 className="font-serif text-4xl font-bold text-white mb-3 tracking-tight">
               Spice Haven<span className="text-amber-400">.</span>
@@ -65,32 +93,37 @@ const Footer = () => {
               Experience the rich culinary heritage of India in every bite.
             </p>
             <div className="flex gap-3">
+              {/* ✅ External links — keep <a> */}
               {socialLinks.map((item) => (
-                <Link
+                <motion.a
                   key={item.name}
-                  to={item.link}
-                  className="w-10 h-10 rounded-full border border-stone-700/60 flex items-center justify-center text-stone-400 hover:text-amber-400 hover:border-amber-400 hover:shadow-lg hover:shadow-amber-400/20 transition-all duration-300  bg-stone-800/30 backdrop-blur-sm"
-                  aria-label={item.name}
+                  href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={item.name}
+                  whileHover={{ scale: 1.1, y: -3 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-10 h-10 rounded-full border border-stone-700/60 flex items-center justify-center text-stone-400 hover:text-amber-400 hover:border-amber-400 hover:shadow-lg hover:shadow-amber-400/20 transition-all duration-300 bg-stone-800/30 backdrop-blur-sm"
                 >
                   {item.icon}
-                </Link>
+                </motion.a>
               ))}
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* ===== Quick Links ===== */}
           <div>
             <h4 className="text-white font-semibold text-xs uppercase tracking-[0.2em] mb-5 relative inline-block">
               Quick Links
               <span className="absolute -bottom-1 left-0 w-8 h-0.5 bg-gradient-to-r from-orange-500 to-red-600 rounded-full" />
             </h4>
             <ul className="space-y-3 text-sm">
-              {quickLinks.map(({ label, href }) => (
+              {quickLinks.map(({ label, to }) => (
                 <li key={label}>
-                  <a
-                    href={href}
+                  {/* ✅ Replaced <a> with <Link> + onClick scrollToTop */}
+                  <Link
+                    to={to}
+                    onClick={scrollToTop}
                     className="text-stone-400 hover:text-amber-400 transition-all duration-300 inline-flex items-center gap-2 group"
                   >
                     <ChevronRight
@@ -98,13 +131,13 @@ const Footer = () => {
                       className="text-amber-400/60 group-hover:translate-x-1 transition-transform duration-300"
                     />
                     {label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* ===== Contact ===== */}
           <div>
             <h4 className="text-white font-semibold text-xs uppercase tracking-[0.2em] mb-5 relative inline-block">
               Contact
@@ -147,7 +180,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Opening Hours */}
+          {/* ===== Opening Hours ===== */}
           <div>
             <h4 className="text-white font-semibold text-xs uppercase tracking-[0.2em] mb-5 relative inline-block">
               Opening Hours
@@ -174,7 +207,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Newsletter – glass card */}
+        {/* ===== Newsletter ===== */}
         <div className="mt-14 p-5 md:p-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl">
           <div className="flex flex-col md:flex-row items-center justify-between gap-5">
             <div>
@@ -186,7 +219,7 @@ const Footer = () => {
               </p>
             </div>
             <form
-              className="flex flex-wrap w-full md:w-auto gap-2 "
+              className="flex flex-wrap w-full md:w-auto gap-2"
               onSubmit={handleSubscribe}
             >
               <input
@@ -200,7 +233,7 @@ const Footer = () => {
               />
               <button
                 type="submit"
-                className=" cursor-pointer w-full sm:w-fit  px-7 py-3 bg-gradient-to-r from-orange-500 to-red-600 text-stone-950 font-semibold text-sm rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-amber-500/30 whitespace-nowrap active:scale-95"
+                className="cursor-pointer w-full sm:w-fit px-7 py-3 bg-gradient-to-r from-orange-500 to-red-600 text-stone-950 font-semibold text-sm rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-amber-500/30 whitespace-nowrap active:scale-95"
               >
                 Subscribe
               </button>
@@ -208,7 +241,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        {/* ===== Bottom Bar ===== */}
         <div className="mt-10 pt-6 border-t border-stone-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500">
           <p>
             © {currentYear} Spice Haven. All rights reserved. Designed with{" "}
@@ -216,27 +249,34 @@ const Footer = () => {
             Haven.
           </p>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-amber-400 transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#" className="hover:text-amber-400 transition-colors">
-              Terms of Service
-            </a>
-            <a href="#" className="hover:text-amber-400 transition-colors">
-              Cookies
-            </a>
+            {/* ✅ Legal links now use <Link> */}
+            {legalLinks.map(({ label, to }) => (
+              <Link
+                key={label}
+                to={to}
+                onClick={scrollToTop}
+                className="hover:text-amber-400 transition-colors"
+              >
+                {label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Back to Top Button */}
-      <button
+      {/* ===== Back to Top Button ===== */}
+      <motion.button
         onClick={scrollToTop}
-        className="cursor-pointer  fixed bottom-8 right-8 z-50 w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 text-stone-950 rounded-full shadow-lg shadow-amber-500/30 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-amber-500/50 backdrop-blur-sm hover:bg-amber-300"
+        whileHover={{ scale: 1.15, y: -4 }}
+        whileTap={{ scale: 0.9 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="cursor-pointer fixed bottom-8 right-8 z-50 w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 text-stone-950 rounded-full shadow-lg shadow-amber-500/30 flex items-center justify-center transition-all duration-300 hover:shadow-amber-500/50 backdrop-blur-sm hover:bg-amber-300"
         aria-label="Back to top"
       >
         <ArrowUp size={20} />
-      </button>
+      </motion.button>
     </footer>
   );
 };
