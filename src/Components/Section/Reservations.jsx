@@ -40,7 +40,7 @@ const Reservations = () => {
               Book Now
             </Link>
             <a
-              href="tel:+1234567890"
+              href="tel:+91 9026350956"
               className="border-2 border-white/30 hover:border-amber-400 text-white hover:text-amber-400 px-12 py-4 rounded-full text-sm font-semibold tracking-widest uppercase transition-all"
             >
               Call Us
