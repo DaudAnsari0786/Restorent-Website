@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Menu,
   X,
   Search,
-  Utensils,
   Phone,
   Home,
   Users,
@@ -23,7 +22,6 @@ const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
-// Static data outside component
 const navLinks = [
   { name: "Home", link: "/home", icon: Home },
   { name: "Menu", link: "/Menu", icon: Hamburger },
@@ -37,14 +35,33 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const navigate = useNavigate();
+  const profileRef = useRef(null);
 
-  // Mock user state - replace with actual auth state
   const [user, setUser] = useState({
     isLoggedIn: true,
     name: "John Doe",
     email: "john@example.com",
-    avatar: null, // or a URL to an image
+    avatar: null,
   });
+
+  // Close profile dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setIsProfileOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Prevent body scroll when mobile menu open
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "unset";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -53,32 +70,35 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    // Add your logout logic here
     setUser({ ...user, isLoggedIn: false });
     setIsProfileOpen(false);
     navigate("/");
   };
 
   const handleLogin = () => {
-    // Add your login logic here
     navigate("/login");
   };
 
-  const getInitials = (name) => {
-    return name
+  const getInitials = (name) =>
+    name
       .split(" ")
       .map((n) => n[0])
       .join("")
       .toUpperCase()
       .slice(0, 2);
-  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/home" className="flex items-center space-x-2">
+      <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
+        {/* 3-column flex: logo | centered links | right controls */}
+        <div className="flex items-center justify-between h-16 gap-2">
+
+          {/* ========== LOGO ========== */}
+          <Link
+            to="/home"
+            onClick={scrollToTop}
+            className="flex items-center space-x-2 shrink-0"
+          >
             <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center">
               <UtensilsCrossed color="white" />
             </div>
@@ -87,37 +107,38 @@ const Navbar = () => {
                 Spice Haven
               </span>
               <p className="text-xs text-gray-500 -mt-1">
-                Fine Dining & Catering
+                Fine Dining &amp; Catering
               </p>
             </div>
           </Link>
 
-          {/* Desktop: Nav Links + Search + Book Now + Profile */}
-          <div className="hidden md:flex items-center space-x-1 ml-10">
+          {/* ========== DESKTOP NAV LINKS (flexible center column) ========== */}
+          <div className="hidden lg:flex flex-1 items-center justify-center gap-0.5 xl:gap-1 min-w-0">
             {navLinks.map(({ name, link }) => (
               <Link
-                onClick={scrollToTop}
                 key={name}
                 to={link}
-                className="px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-amber-600 hover:bg-amber-50 transition-all duration-200"
+                onClick={scrollToTop}
+                className="px-2.5 xl:px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-amber-600 hover:bg-amber-50 transition-all duration-200 whitespace-nowrap"
               >
                 {name}
               </Link>
             ))}
           </div>
 
-          {/* Desktop: Search bar, Book Now, and Profile */}
-          <div className="hidden md:flex items-center space-x-3 ml-10">
+          {/* ========== DESKTOP RIGHT SIDE ========== */}
+          <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
+            {/* Search */}
             <form onSubmit={handleSearch} className="relative">
               <input
                 type="text"
                 placeholder="Search dishes..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-40 lg:w-86  pl-9 pr-9 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-gray-50"
+                className="w-36 xl:w-44 2xl:w-56 pl-9 pr-9 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-gray-50 transition-all"
                 aria-label="Search"
               />
-              <Search className="absolute left-2.5 top-2.5 w-4 h-4 text-gray-400" />
+              <Search className="absolute left-2.5 top-2.5 w-4 h-4 text-gray-400 pointer-events-none" />
               {searchQuery && (
                 <button
                   type="button"
@@ -130,22 +151,23 @@ const Navbar = () => {
               )}
             </form>
 
-            {/* Desktop Book Now */}
+            {/* Book Now */}
             <Link
-              onClick={scrollToTop}
               to="/reservations"
-              className="inline-flex items-center -mr-36 gap-0 sm:gap-4 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium rounded-lg transition-all duration-200 whitespace-nowrap"
+              onClick={scrollToTop}
+              className="inline-flex items-center gap-1.5 px-3 xl:px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium rounded-lg transition-all duration-200 whitespace-nowrap"
             >
               <Phone className="w-4 h-4" />
-              Book Now
+              <span className="hidden xl:inline">Book Now</span>
+              <span className="inline xl:hidden">Book</span>
             </Link>
 
-            {/* Desktop Profile Section */}
-            <div className="relative left-40">
+            {/* Profile Dropdown */}
+            <div className="relative ml-1 xl:ml-2" ref={profileRef}>
               {user.isLoggedIn ? (
                 <>
                   <button
-                    onClick={() => setIsProfileOpen(!isProfileOpen)}
+                    onClick={() => setIsProfileOpen((p) => !p)}
                     className="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500"
                     aria-label="Profile menu"
                   >
@@ -167,9 +189,8 @@ const Navbar = () => {
                     />
                   </button>
 
-                  {/* Profile Dropdown */}
                   {isProfileOpen && (
-                    <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-1 overflow-hidden">
+                    <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-1 overflow-hidden z-50">
                       <div className="px-4 py-3 border-b border-gray-100">
                         <p className="text-sm font-medium text-gray-900">
                           {user.name}
@@ -222,14 +243,14 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center gap-2">
-            {/* Mobile Profile Icon */}
+          {/* ========== MOBILE / TABLET TOGGLE ========== */}
+          <div className="flex lg:hidden items-center gap-2 ml-auto">
             {user.isLoggedIn && (
               <Link
                 to="/profile"
-                className="p-2 text-gray-600 hover:text-amber-600 transition-colors"
                 onClick={scrollToTop}
+                className="p-1"
+                aria-label="Profile"
               >
                 {user.avatar ? (
                   <img
@@ -244,8 +265,9 @@ const Navbar = () => {
                 )}
               </Link>
             )}
+
             <button
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => setIsOpen((o) => !o)}
               className="p-2 text-gray-600 hover:text-amber-600 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 rounded-lg"
               aria-label="Toggle menu"
             >
@@ -259,14 +281,13 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu with slide animation */}
+      {/* ========== MOBILE / TABLET MENU ========== */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white border-t border-gray-100 ${
+          isOpen ? "max-h-[85vh] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="bg-white border-t border-gray-200 px-4 pt-3 pb-4 space-y-1">
-          {/* Mobile User Info */}
+        <div className="px-4 sm:px-6 pt-3 pb-4 space-y-1 overflow-y-auto max-h-[calc(85vh-1rem)]">
           {user.isLoggedIn && (
             <div className="flex items-center gap-3 px-3 py-3 mb-2 bg-gray-50 rounded-lg">
               {user.avatar ? (
@@ -289,7 +310,6 @@ const Navbar = () => {
             </div>
           )}
 
-          {/* Mobile Search */}
           <form onSubmit={handleSearch} className="relative mb-3">
             <input
               type="text"
@@ -299,7 +319,7 @@ const Navbar = () => {
               className="w-full pl-10 pr-10 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 bg-gray-50"
               aria-label="Search"
             />
-            <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400 pointer-events-none" />
             {searchQuery && (
               <button
                 type="button"
@@ -312,43 +332,42 @@ const Navbar = () => {
             )}
           </form>
 
-          {/* Mobile Nav Links with icons */}
           {navLinks.map(({ name, link, icon: Icon }) => (
             <Link
               key={name}
               to={link}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium text-gray-600 hover:text-amber-600 hover:bg-amber-50 transition-all"
               onClick={() => {
                 scrollToTop();
                 setIsOpen(false);
               }}
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium text-gray-600 hover:text-amber-600 hover:bg-amber-50 transition-all"
             >
               <Icon className="w-5 h-5" />
               {name}
             </Link>
           ))}
 
-          {/* Mobile Profile Links (when logged in) */}
           {user.isLoggedIn && (
             <>
+              <div className="border-t border-gray-100 my-2"></div>
               <Link
                 to="/profile"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium text-gray-600 hover:text-amber-600 hover:bg-amber-50 transition-all"
                 onClick={() => {
                   scrollToTop();
                   setIsOpen(false);
                 }}
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium text-gray-600 hover:text-amber-600 hover:bg-amber-50 transition-all"
               >
                 <UserCircle className="w-5 h-5" />
                 My Profile
               </Link>
               <Link
                 to="/profile/settings"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium text-gray-600 hover:text-amber-600 hover:bg-amber-50 transition-all"
                 onClick={() => {
                   scrollToTop();
                   setIsOpen(false);
                 }}
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium text-gray-600 hover:text-amber-600 hover:bg-amber-50 transition-all"
               >
                 <Settings className="w-5 h-5" />
                 Settings
@@ -366,7 +385,6 @@ const Navbar = () => {
             </>
           )}
 
-          {/* Mobile Login Button (when logged out) */}
           {!user.isLoggedIn && (
             <button
               onClick={() => {
@@ -380,14 +398,13 @@ const Navbar = () => {
             </button>
           )}
 
-          {/* Mobile Book Now */}
           <Link
             to="/booking"
-            className="flex items-center justify-center gap-2 w-full px-4 py-3 mt-2 bg-gradient-to-r from-orange-500 to-red-600 hover:bg-amber-700 text-white font-medium rounded-lg transition-all"
             onClick={() => {
               scrollToTop();
               setIsOpen(false);
             }}
+            className="flex items-center justify-center gap-2 w-full px-4 py-3 mt-2 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-medium rounded-lg transition-all"
           >
             <Phone className="w-5 h-5" />
             Book Now
